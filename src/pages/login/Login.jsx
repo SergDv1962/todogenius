@@ -3,14 +3,17 @@ import { Button, Form, Input } from 'antd'
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { ROUTES } from '../../utils/routes';
+import { useSelector } from 'react-redux';
 
-const Login = ({ users }) => {
+const Login = () => {
+   const usersList = useSelector(state => state.registered.users)
+
    const { setIsAuthenticated } = useContext(AuthContext)
    const [loginUser, setLoginUser] = useState({});
    const navigate = useNavigate();
 
    const onFinish = (values) => {
-      const user = users.find(user=>user.email===values.email);
+      const user = usersList.find(user=>user.email===values.email);
       setLoginUser(user);
 
       if (user.email.toLowerCase()===values.email.toLowerCase()) {
