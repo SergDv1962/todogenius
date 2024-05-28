@@ -1,3 +1,18 @@
+header, 
+footer{
+  padding: 4px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  background-color: rgb(22, 22, 22);
+}
+a{
+  color: aqua;
+  text-decoration: none;
+  
+}
+
 .App {
   text-align: center;
 }
@@ -11,4 +26,25 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+.container-layout{
+  margin: 4px;
+  border: 1px solid yellow;
+}
+
+.active {
+  color: fuchsia ;
+}
+.btn{
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.btn-blue{
+  background-color: blue;
+}
+
+.btn-blue:hover {
+background-color: rgb(55, 55, 168);
 }
