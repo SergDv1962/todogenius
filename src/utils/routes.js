@@ -3,4 +3,5 @@ export const ROUTES = {
    ABOUT: '/about',
    TODOAPP: '/todoapp',
    LOGIN: '/login',
+   REGICTRATION: '/registration'
 }
