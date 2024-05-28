@@ -1,14 +1,30 @@
-import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, NavLink, Outlet } from "react-router-dom";
+
 import { ROUTES } from "../utils/routes";
 
+import { AuthContext } from "../context/AuthContext";
+
 const Layout = () => {
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+
   return (
     <div className="container-layout">
       <header>
         <NavLink to={ROUTES.HOME}>Home</NavLink>
-        <NavLink to={ROUTES.TODOAPP}>Todo-App</NavLink>
-        <NavLink to={ROUTES.ABOUT}>About</NavLink>
+        {isAuthenticated ? (
+          <>
+            <NavLink to={ROUTES.TODOAPP}>Todo-App</NavLink>
+            <NavLink to={ROUTES.ABOUT}>About</NavLink>
+            <Link to={ROUTES.LOGIN} onClick={() => {
+              setIsAuthenticated(false);
+              localStorage.removeItem('email');
+              }}>Log out</Link>
+          </>
+        ) : (
+          <NavLink to={ROUTES.LOGIN}>Login</NavLink>
+        )}
+        
       </header>
       <main>
         <Outlet />
