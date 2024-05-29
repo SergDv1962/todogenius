@@ -16,7 +16,6 @@ const setError = (state, action) => {
   state.error = action.error.message;
 }
 
-
 const registeredSlice = createSlice({
    name: 'users',
    initialState: {

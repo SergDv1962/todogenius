@@ -8,6 +8,6 @@ export async function getAllUsers(){
 }
 
 export async function addUser(payload){
-   const response = await axios.post('auth', payload);
+   const response = await axios.post('auth123', payload);
    return response.data
 }

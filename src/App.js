@@ -7,7 +7,7 @@ import "./App.css";
 
 import Loader from "./loaders/Loader";
 import { AuthContext } from "./context/AuthContext";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "./layout/Layout";
 
@@ -17,38 +17,48 @@ import AppTodo from "./pages/app-todo/AppTodo";
 import NotFoundPages from "./pages/notfoundpages/NotFoundPages";
 import Login from "./pages/login/Login";
 import Registration from "./pages/registration/Registration";
+import ErrorPage from "./pages/error-page/ErrorPage";
 
 import { fetchUsers } from "./store/registeredSlice";
 
 function App() {
+  const { error } = useSelector((state) => state.registered);
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("email")
   );
-
+  console.log(error);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsers())
-  }, [dispatch])
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
   return (
     <div className="App">
       <div className="App-container">
         <p>My TODO App</p>
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
-          <Suspense fallback={<Loader />}>
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route path={ROUTES.LOGIN} element={<Login/>} />
-                <Route index element={<Home />} />
-                <Route path={ROUTES.ABOUT} element={<About />} />
-                <Route path={ROUTES.TODOAPP} element={<AppTodo />} />
-                <Route path={ROUTES.REGICTRATION} element={<Registration />} />
-                <Route path="*" element={<NotFoundPages />} />
-              </Route>
-            </Routes>
-          </Suspense>
-        </AuthContext.Provider>
+        {!!error ? (
+          <ErrorPage />
+        ) : (
+          <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+            <Suspense fallback={<Loader />}>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route path={ROUTES.LOGIN} element={<Login />} />
+                  <Route index element={<Home />} />
+                  <Route path={ROUTES.ABOUT} element={<About />} />
+                  <Route path={ROUTES.TODOAPP} element={<AppTodo />} />
+
+                  <Route
+                    path={ROUTES.REGICTRATION}
+                    element={<Registration />}
+                  />
+                  <Route path="*" element={<NotFoundPages />} />
+                </Route>
+              </Routes>
+            </Suspense>
+          </AuthContext.Provider>
+        )}
       </div>
     </div>
   );

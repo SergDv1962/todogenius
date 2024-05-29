@@ -48,3 +48,11 @@ a{
 .btn-blue:hover {
 background-color: rgb(55, 55, 168);
 }
+
+.page-error{
+  margin: 12px;
+  padding: 8px;
+  background-color: #5a5a5a;
+  border: 2px solid red;
+  color: aquamarine;
+}
