@@ -1,24 +1,19 @@
 import React from 'react';
 import { Button, Form, Input } from "antd";
-import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { addUser } from '../../api/api';
+import { useDispatch } from 'react-redux';
+import { addNewUser, fetchUsers } from '../../store/registeredSlice';
 
 
 const Registration = () => {
-   const client = useQueryClient();
    const navigation = useNavigate();
 
-   const {mutateAsync} = useMutation({
-      mutationFn:(payload)=>addUser(payload),
-      onSuccess:()=>{
-         navigation('/login');
-         client.invalidateQueries(['userList'])
-      }
-   });
+   const dispatch = useDispatch()
 
    const onFinish = (values)=>{
-      mutateAsync(values);
+      dispatch(addNewUser(values));
+      dispatch(fetchUsers())
+      navigation('/login');
    }
    return ( 
       <>

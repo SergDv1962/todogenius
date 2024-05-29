@@ -1,10 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllUsers } from "../api/api";
+import { addUser, getAllUsers } from "../api/api";
 
 export const fetchUsers = createAsyncThunk(
    'users/fetchUsers',
    getAllUsers
 );
+
+export const addNewUser = createAsyncThunk(
+   'users/addNewUser',
+   addUser,
+)
+
+const setError = (state, action) => {
+  state.loading = false;
+  state.error = action.error.message;
+}
 
 
 const registeredSlice = createSlice({
@@ -23,10 +33,8 @@ const registeredSlice = createSlice({
       state.loading = false;
       state.users = action.payload;
     });
-    builder.addCase(fetchUsers.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message;
-    });
+    builder.addCase(fetchUsers.rejected, setError);
+    builder.addCase(addNewUser.rejected, setError);
   },
 });
 
