@@ -37,6 +37,7 @@ function App() {
     <div className="App">
       <div className="App-container">
         <p>My TODO App</p>
+        <p>Test git</p>
         {!!error ? (
           <ErrorPage />
         ) : (
